@@ -2,7 +2,10 @@
 # Variables
 
 # Build tools
-NASM = nasm -f bin -dN=0x78200
+NASM = nasm -felf
+CC = gcc -std=c99 -m32 -O2 -ffreestanding -no-pie -fno-pie -mno-sse -fno-stack-protector -c
+LINKER = ld -m elf_i386
+OBJCOPY = objcopy -I elf32-i386 -O binary
 
 
 # =============================================================================
@@ -10,15 +13,23 @@ NASM = nasm -f bin -dN=0x78200
 
 all: clean build test
 
-.tmp/boot.bin: src/bootloader.asm
-	$(NASM) src/bootloader.asm -o .tmp/boot.bin
+.tmp/kernel.o: src/kernel.c
+	$(CC) src/kernel.c -o .tmp/kernel.o
 
-boot.img: .tmp/boot.bin
-	dd if=/dev/zero of=boot.img bs=512 count=2880
-	dd if=.tmp/boot.bin of=boot.img conv=notrunc
-	dd if=./krivie_vtorogo_poryadka.txt of=boot.img conv=notrunc seek=1
+.tmp/bootloader.o: src/bootloader.asm
+	$(NASM) src/bootloader.asm -o .tmp/bootloader.o
 
-build: boot.img
+.tmp/thanos.elf: .tmp/kernel.o .tmp/bootloader.o
+	$(LINKER) .tmp/kernel.o .tmp/bootloader.o -T linking.ld -o .tmp/thanos.elf
+
+.tmp/thanos.bin: .tmp/thanos.elf
+	$(OBJCOPY) .tmp/thanos.elf .tmp/thanos.bin
+
+thanos.img: .tmp/thanos.bin
+	dd if=/dev/zero of=thanos.img bs=512 count=2880
+	dd if=.tmp/thanos.bin of=thanos.img conv=notrunc
+
+build: thanos.img
 
 clean:
 	rm -f *.img
@@ -26,10 +37,10 @@ clean:
 	mkdir .tmp
 
 test: build
-	qemu-system-i386 -cpu pentium2 -m 1g -fda boot.img -monitor stdio -device VGA
+	qemu-system-i386 -cpu pentium2 -m 1g -fda thanos.img -monitor stdio -device VGA
 
 debug: build
-	qemu-system-i386 -cpu pentium2 -m 1g -fda boot.img -monitor stdio -device VGA -s -S &
+	qemu-system-i386 -cpu pentium2 -m 1g -fda thanos.img -monitor stdio -device VGA -s -S &
 	gdb
 
 .PHONY: all build clean test debug
