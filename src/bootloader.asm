@@ -73,7 +73,7 @@ first:
 
 
 [EXTERN kernel_entry]
-call 0x10:kernel_entry
+call kernel_entry
 
 
 [GLOBAL endless_loop]
