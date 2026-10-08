@@ -1,5 +1,4 @@
 [BITS 16]
-N equ 0x64000
 mov ax, 0
 mov ds, ax
 mov ax, 0x07E0
@@ -17,7 +16,7 @@ mov ch, 0 ;number of first cilinder
 mov dh, 0 ;number of first head
 mov bx, 0x0 ;setting [es : bx]
 
-cnt: dd 0 ;counter of bytes
+mov si, 0 ;counter of bytes
 
 load:
   mov ah, 0x02
@@ -30,8 +29,8 @@ load:
   add ax, 0x20 ;increasing [es:bx] by 512
   mov es, ax
 
-  add dword[cnt], 512 ;increasing counter of read bytes
-  cmp dword[cnt], N ;comparing with N and finishing if >=
+  inc si ;increasing counter of read bytes
+  cmp si, SECTORS ;comparing with N and finishing if >=
   jae next
   inc cl ;changing coordinates
   cmp cl, 19
@@ -63,7 +62,7 @@ jmp 0x10:first ;tramplin
 
 [BITS 32]
 first:
-  mov ax, word[data_segment_selector]
+  mov ax, 8
   mov ds, ax
   mov ss, ax
   mov es, ax
