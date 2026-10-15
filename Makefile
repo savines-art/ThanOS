@@ -17,7 +17,7 @@ all: clean build test
 	$(CC) src/kernel.c -o .tmp/kernel.o
 
 .tmp/bootloader.o: src/bootloader.asm
-	$(NASM) src/bootloader.asm -o .tmp/bootloader.o
+	$(NASM) src/bootloader.asm -o .tmp/bootloader.o -dN=0x64000
 
 .tmp/thanos.elf: .tmp/kernel.o .tmp/bootloader.o
 	$(LINKER) .tmp/kernel.o .tmp/bootloader.o -T linking.ld -o .tmp/thanos.elf

@@ -1,4 +1,19 @@
 [BITS 16]
+
+%define data_segment_selector 8
+  ; 0b0000000000001 0 00
+  ; cpl and rpl are 0
+  ; table identificator 0 (global descriptor table)
+  ; index 1
+
+%define code_segment_selector 16
+  ; 0b0000000000010 0 00
+  ; cpl and rpl are 0
+  ; table identificator 0 (global descriptor table)
+  ; index 2
+
+%define SECTORS N / 512
+
 mov ax, 0
 mov ds, ax
 mov ax, 0x07E0
@@ -58,18 +73,16 @@ mov eax, cr0
 or eax, 1
 mov cr0, eax
 
-jmp 0x10:first ;tramplin
+jmp code_segment_selector:first ;tramplin
 
 [BITS 32]
 first:
-  mov ax, 8
+  mov ax, data_segment_selector
   mov ds, ax
   mov ss, ax
   mov es, ax
   mov fs, ax
   mov gs, ax
-
-
 
 [EXTERN kernel_entry]
 call kernel_entry
@@ -82,20 +95,6 @@ endless_loop:
 pseudo_descriptor:
   dw 0x17
   dd gdt
-
-data_segment_selector:
-  dw 0x8
-  ; 0b0000000000001 0 00
-  ; cpl and rpl are 0
-  ; table identificator 0 (global descriptor table)
-  ; index 1
-
-code_segment_selector:
-  dw 16
-  ; 0b0000000000010 0 00
-  ; cpl and rpl are 0
-  ; table identificator 0 (global descriptor table)
-  ; index 2
 
 align 8
 gdt:
