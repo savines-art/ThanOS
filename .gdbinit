@@ -3,4 +3,4 @@ set disassembly-flavor intel
 b *0x7C00
 c
 
-# set arch i80386
+ set arch i8086
