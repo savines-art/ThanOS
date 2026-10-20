@@ -12,7 +12,7 @@
   ; table identificator 0 (global descriptor table)
   ; index 2
 
-%define SECTORS N / 512
+%define SECTORS (KERNEL_SIZE + 512) / 512
 
 mov ax, 0
 mov ds, ax
@@ -91,6 +91,11 @@ call kernel_entry
 [GLOBAL endless_loop]
 endless_loop:
   jmp endless_loop
+
+[GLOBAL clear_interrupt]
+clear_interrupt:
+    cli
+    ret
 
 pseudo_descriptor:
   dw 0x17
