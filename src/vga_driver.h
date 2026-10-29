@@ -9,7 +9,6 @@ void vga_scroll_down();
 typedef struct vga_cursor {
     size_t x;
     size_t y;
-    char color;
 } vga_cursor;
 
 extern vga_cursor cursor;

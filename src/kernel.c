@@ -1,4 +1,4 @@
-#define DEBUG_MODE
+//#define DEBUG_MODE
 #include "vga_driver.h"
 #include "alloc_undead.h"
 #include "assert.h"
@@ -11,12 +11,12 @@
 void kernel_entry() {
     init_printer();
 
-    //assert(1 == 2);
-    int alignment = 10;
+    assert(1 == 2);
+    size_t alignment = 8;
     while (1) {
         void* o = malloc_undead(1024, alignment);
         assert(!((size_t)o % alignment));
-        printf("o: %x \\ %d \n", (size_t) o, (size_t) o);
+        printf("o: %x \\ %d \n", (size_t) o, -((size_t) o));
     }
 
     printf("End!");

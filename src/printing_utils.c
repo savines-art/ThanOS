@@ -10,14 +10,6 @@
 void init_printer() {
     vga_clear_screen();
     cursor.x = cursor.y = 0;
-    cursor.color = 1;
-}
-
-void change_color() {
-    cursor.color++;
-    if (cursor.color == 16) {
-        cursor.color = 1;
-    }
 }
 
 void print_char(char c) {
@@ -26,7 +18,6 @@ void print_char(char c) {
     if (cursor.x >= VGA_WIDTH) {
         new_line();
     }
-    change_color();
 }
 
 void print_string(char* s) {
@@ -36,6 +27,10 @@ void print_string(char* s) {
 }
 
 void print_dec(int number) {
+    if (number < 0) {
+        print_char('-');
+        number = -number;
+    }
     size_t l = get_num_len_dec(number);
     for (size_t i = l; i-- > 0;) {
         int digit = get_digit_dec(number, i);
@@ -44,7 +39,7 @@ void print_dec(int number) {
     }
 }
 
-void print_hex(int number) {
+void print_hex(size_t number) {
     print_char('0');
     print_char('x');
     size_t l = get_num_len_hex(number);

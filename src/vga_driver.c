@@ -11,7 +11,7 @@ void vga_clear_screen() {
 void vga_print_char(char c, size_t x, size_t y) {
     void* addr = (void*)(0xB8000 + 2 * (y * 80 + x));
     *((char*) addr) = c;
-    *((char*) (addr + 1)) = cursor.color;
+    *((char*) (addr + 1)) = 0b00001111;
 }
 
 void vga_scroll_down() {

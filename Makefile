@@ -12,8 +12,6 @@ C_OBJECTS   = $(patsubst src/%.c,.tmp/%.o,$(C_SOURCES))
 
 ASM_SOURCES = $(filter-out src/bootloader.asm,$(wildcard src/*.asm))
 ASM_OBJECTS = $(patsubst src/%.asm,.tmp/%.o,$(ASM_SOURCES))
-# =============================================================================
-# Tasks
 
 all: clean build test
 
