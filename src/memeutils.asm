@@ -10,11 +10,11 @@ memmove:
 
         cld
         cmp esi, edi
-        jge .move
+        jae .move
         lea edx, [esi + ecx]
         dec edx
         cmp edi, edx
-        jg .move
+        ja .move
 
         std
         mov esi, edx
@@ -50,7 +50,7 @@ memzero:
     mov edx, dword[esp + 8]
     .loop:
         cmp edx, 0
-        jle .end
+        jbe .end
         mov byte[ecx], 0
         dec edx
         inc ecx

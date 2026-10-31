@@ -55,6 +55,7 @@ void print_hex(size_t number) {
     }
 }
 
+//todo: make print %
 void vprintf(const char* fmt, va_list args) {
     for (size_t i = 0; fmt[i] != '\0'; i++) {
         char c = fmt[i];

@@ -1,4 +1,4 @@
-//#define DEBUG_MODE
+#define DEBUG_MODE
 #include "vga_driver.h"
 #include "alloc_undead.h"
 #include "assert.h"
@@ -7,7 +7,7 @@
 #include "other_utils.h"
 #include "printing_utils.h"
 
-
+//todo: experiments with different sizes and alignments
 void kernel_entry() {
     init_printer();
 

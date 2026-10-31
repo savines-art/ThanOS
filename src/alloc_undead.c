@@ -18,14 +18,12 @@ void* malloc_undead(size_t size, size_t alignment) {
     }
     void* ret = arena.current;
     if ((size_t) arena.current + size >= (size_t) arena.end) {
-        kernelpanic("Out of memory!\n");
+        kernelpanic("Out of memory: failed allocation at: %x, alignment: %d\n", arena.current, alignment);
     }
     arena.current += size;
     return ret;
 }
 void* calloc_undead(size_t size, size_t alignment) {
-    if (!size) return NULL;
-
     void* ret = malloc_undead(size, alignment);
     memzero(ret, size);
     return ret;

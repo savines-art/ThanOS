@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include "vga_driver.h"
 
+//todo: move to printutils
 size_t get_num_len_dec(int number) {
     size_t ret = 0;
      do {
