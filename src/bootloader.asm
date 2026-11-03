@@ -97,6 +97,11 @@ clear_interrupt:
     cli
     ret
 
+[GLOBAL load_idt]
+load_idt:
+    mov ecx, dword[esp + 4]
+    lidt[ecx]
+
 pseudo_descriptor:
   dw 0x17
   dd gdt

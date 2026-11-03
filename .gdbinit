@@ -5,8 +5,6 @@ set arch i8086
 b *0x7C00
 c
 b kernel_entry
-b malloc_undead
-b print_char
-b print_hex
+b printf
 c
 layout src

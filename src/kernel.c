@@ -1,4 +1,4 @@
-#define DEBUG_MODE
+//#define DEBUG_MODE
 #include "vga_driver.h"
 #include "alloc_undead.h"
 #include "assert.h"
@@ -6,20 +6,25 @@
 #include "memeutils.h"
 #include "other_utils.h"
 #include "printing_utils.h"
+#include "synonyms.h"
+#include "interrupt_handler.h"
 
 //todo: experiments with different sizes and alignments
 void kernel_entry() {
     init_printer();
+    init_idt();
+    //static_assert(sizeof(u8) == 2, "aaa");
 
-    assert(1 == 2);
+    //assert(1 == 2);
     size_t alignment = 8;
-    while (1) {
+    /*while (1) {
         void* o = malloc_undead(1024, alignment);
         assert(!((size_t)o % alignment));
         printf("o: %x \\ %d \n", (size_t) o, -((size_t) o));
-    }
-
-    printf("End!");
+    }*/
+    printf("Hor");
+    int a = 1 / 0;
+    printf("End! %d", a);
 
     endless_loop();
 }

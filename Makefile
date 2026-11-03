@@ -3,7 +3,7 @@
 
 # Build tools
 NASM = nasm -felf -g
-CC = gcc -std=c99 -m32 -O2 -ffreestanding -no-pie -fno-pie -mno-sse -fno-stack-protector -c -g
+CC = gcc -std=c23 -m32 -O2 -ffreestanding -no-pie -fno-pie -mno-sse -fno-stack-protector -c -g
 LINKER = ld -m elf_i386
 OBJCOPY = objcopy -I elf32-i386 -O binary
 
@@ -17,19 +17,12 @@ all: clean build test
 
 .tmp/%.o: src/%.c | .tmp
 	$(CC) $< -o $@
-	#$(NASM) $< -o $@
 
 .tmp/%.o: src/%.asm | .tmp
 	$(NASM) $< -o $@
 
-#.tmp/kernel.o: src/kernel.c
-	#$(CC) $(C_SOURCE) -o .tmp/kernel.o
-
 .tmp/bootloader.o: src/bootloader.asm $(C_OBJECTS)
 	$(NASM) src/bootloader.asm -o .tmp/bootloader.o -DKERNEL_SIZE=$(shell cat $(C_OBJECTS) | wc -c | tr -d ' ')
-
-#.tmp/memutils.o: src/memeutils.asm
-	#$(NASM) src/memutils.asm -o .tmp/memutils.o
 
 .tmp/thanos.elf: $(C_OBJECTS) $(ASM_OBJECTS) .tmp/bootloader.o
 	$(LINKER) $(C_OBJECTS) $(ASM_OBJECTS) -T linking.ld -o .tmp/thanos.elf
