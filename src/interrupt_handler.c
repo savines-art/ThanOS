@@ -7,9 +7,10 @@
 #include "universal_handler.h"
 #include "trampolin_maker.h"
 
-#define code_segment_selector 8
+#define code_segment_selector 16
 
 void load_idt(idt_pseudo_descriptor* pseudo);
+char* get_code_descriptor();
 
 _Bool has_err_code(u8 vector) {
     return (vector == 8 || (vector >= 10 && vector <= 14) || vector == 17 || vector == 21);
@@ -18,10 +19,10 @@ _Bool has_err_code(u8 vector) {
 char* create_trampolin(u8 vector) {
     char* trampolin;
     if (has_err_code(vector)) {
-        trampolin = (char*) malloc_undead(10, 8);
+        trampolin = (char*) malloc_undead(10, 1);
         make_trampolin_e(trampolin, vector);
     } else {
-        trampolin = (char*) malloc_undead(11, 8);
+        trampolin = (char*) malloc_undead(11, 1);
         make_trampolin_ne(trampolin, vector);
     }
     return trampolin;
@@ -39,12 +40,11 @@ void init_idt() {
         idt[i].fixed4 = 0;
         idt[i].dpl = 0;
         idt[i].p = 1;
-        idt[i].offset_16_31 = (u16) trampolin >> 16;
+        idt[i].offset_16_31 = (size_t) trampolin >> 16;
     }
-    size_t lin_idt_addr = (size_t) idt + 16;
     u16 limit = 256 * 8 - 1;
     idt_pseudo_descriptor pseudo;
-    pseudo.idt_base_addr = (size_t) idt + 16;
+    pseudo.idt_base_addr = (size_t) get_code_descriptor() + (size_t) idt;
     pseudo.idt_limit = limit;
     load_idt(&pseudo);
 }

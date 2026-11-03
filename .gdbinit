@@ -5,6 +5,6 @@ set arch i8086
 b *0x7C00
 c
 b kernel_entry
-b printf
+b init_idt
 c
 layout src

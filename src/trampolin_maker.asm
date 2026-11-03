@@ -1,7 +1,7 @@
 [BITS 32]
 
-%define push_eax 50
-%define push_imm 68
+%define push_eax 0x50
+%define push_imm 0x68
 %define jmp_code 0xE9
 
 [GLOBAL make_trampolin_e]
@@ -13,7 +13,6 @@ make_trampolin_ne:
     mov edx, dword[esp + 8]
     mov byte[ecx], push_eax
     mov byte[ecx + 1], push_imm
-    bswap edx
     mov dword[ecx + 2], edx
     mov dword[ecx + 6], jmp_code
     mov eax, collect_context
@@ -26,7 +25,6 @@ make_trampolin_e:
     mov ecx, dword[esp + 4]
     mov edx, dword[esp + 8]
     mov byte[ecx], push_imm
-    bswap edx
     mov dword[ecx + 1], edx
     mov dword[ecx + 5], jmp_code
     mov eax, collect_context

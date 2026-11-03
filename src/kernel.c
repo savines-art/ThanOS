@@ -8,6 +8,7 @@
 #include "printing_utils.h"
 #include "synonyms.h"
 #include "interrupt_handler.h"
+#include "experiments.h"
 
 //todo: experiments with different sizes and alignments
 void kernel_entry() {
@@ -23,8 +24,9 @@ void kernel_entry() {
         printf("o: %x \\ %d \n", (size_t) o, -((size_t) o));
     }*/
     printf("Hor");
-    int a = 1 / 0;
-    printf("End! %d", a);
+    set_interrupt();
+    //shit(0);
+    //syscall();
 
     endless_loop();
 }

@@ -4,7 +4,9 @@
 
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
+#define DEBUG_MODE
 #include "synonyms.h"
+#include "assert.h"
 #pragma pack(push, 1)
 
 typedef struct {
@@ -24,23 +26,23 @@ typedef struct {
 } segment_descriptor;
 
 typedef struct {
-    u16 offset_0_15 : 16;
-    u16 segment_selector : 16;
-    u8 reserved : 5;
-    u8 fixed1 : 1;
-    u8 fixed2 : 1;
-    u8 fixed3 : 1;
-    u8 type : 3;
-    u8 d : 1;
-    u8 fixed4 : 1;
-    u8 dpl : 2;
-    u8 p : 1;
-    u16 offset_16_31 : 16;
+    u16     offset_0_15      : 16;
+    u16     segment_selector : 16;
+    u8      reserved         : 5;
+    u8      fixed1           : 1;
+    u8      fixed2           : 1;
+    u8      fixed3           : 1;
+    u8      type             : 3;
+    u8      d                : 1;
+    u8      fixed4           : 1;
+    u8      dpl              : 2;
+    u8      p                : 1;
+    u16     offset_16_31     : 16;
 } interrupt_descriptor;
 
 typedef struct {
-    u16 idt_limit : 16;
-    u32 idt_base_addr : 32;
+    u16     idt_limit     : 16;
+    u32     idt_base_addr : 32;
 } idt_pseudo_descriptor;
 #pragma pack(pop)
 

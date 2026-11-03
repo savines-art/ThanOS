@@ -100,7 +100,25 @@ clear_interrupt:
 [GLOBAL load_idt]
 load_idt:
     mov ecx, dword[esp + 4]
-    lidt[ecx]
+    lidt [ecx]
+    ret
+
+[GLOBAL get_code_descriptor]
+get_code_descriptor:
+    xor eax, eax
+    mov ecx, gdt
+    add ecx, code_segment_selector
+    mov dl, byte[ecx + 32]
+    mov dh, byte[ecx + 56]
+    mov ax, dx
+    shl eax, 16
+    mov ax, word[ecx + 16]
+    ret
+
+[GLOBAL set_interrupt]
+set_interrupt:
+    sti
+    ret
 
 pseudo_descriptor:
   dw 0x17
