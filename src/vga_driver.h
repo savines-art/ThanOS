@@ -13,6 +13,9 @@ typedef struct vga_cursor {
 
 extern vga_cursor cursor;
 
+#define VGA_BEGIN 0xB8000
+#define VGA_SIZE 0xFA0
+#define SYMBOL_SIZE 2
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 

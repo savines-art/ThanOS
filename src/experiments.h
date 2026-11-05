@@ -7,6 +7,6 @@
 
 void shit(int arg);
 void syscall();
-void set_interrupt();
+void timer_ex();
 
 #endif //THANOS_EXPERIMENTS_H

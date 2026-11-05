@@ -9,7 +9,6 @@
 
 undead_arena arena = {.start = (char*) 0x100000, .current = (char*) 0x100000, .end = (char*) 0x400000};
 
-
 void* malloc_undead(size_t size, size_t alignment) {
     if (!size) return NULL;
 

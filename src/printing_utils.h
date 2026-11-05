@@ -7,6 +7,12 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+int get_digit_dec(int number, size_t i);
+int get_digit_hex(int number, size_t i);
+size_t get_num_len_dec(int number);
+size_t get_num_len_hex(int number);
+void begin_line();
+void new_line();
 void init_printer();
 void print_char(char c);
 void print_string(char* s);
