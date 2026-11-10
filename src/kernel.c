@@ -18,15 +18,15 @@ void kernel_entry() {
     //assert(1 == 2);
     //size_t alignment = 8;
 
-    for (size_t alignment = 1; alignment < 100; alignment++) {
+    /*for (size_t alignment = 1; alignment < 100; alignment++) {
         for (size_t size = 1; size < 513; size++) {
             void* o = malloc_undead(size, alignment);
             assert(!((size_t)o % alignment));
             printf("o: %x \\ %d \n", (size_t) o, -((size_t) o));
         }
-    }
+    }*/
 
-    //timer_ex();
+    timer_ex();
     //shit(0);
     //syscall();
     //int a = 1 / 0;

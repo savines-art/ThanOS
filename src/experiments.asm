@@ -23,7 +23,7 @@ syscall:
     mov ebp, 4
     mov esi, 5
     mov edi, 6
-    int 0x3
+    int 17
     ret
 
 [GLOBAL timer_ex]
@@ -36,4 +36,6 @@ timer_ex:
     mov esi, 5
     mov edi, 6
     call set_interrupt
+    .loop:
+        jmp .loop
     ret

@@ -10,7 +10,6 @@
 #define code_segment_selector 16
 
 void load_idt(idt_pseudo_descriptor* pseudo);
-char* get_code_descriptor();
 
 _Bool has_err_code(u8 vector) {
     return (vector == 8 || (vector >= 10 && vector <= 14) || vector == 17 || vector == 21);
@@ -44,7 +43,7 @@ void init_idt() {
     }
     u16 limit = 256 * 8 - 1;
     idt_pseudo_descriptor pseudo;
-    pseudo.idt_base_addr = (size_t) get_code_descriptor() + (size_t) idt;
+    pseudo.idt_base_addr = (size_t) idt;
     pseudo.idt_limit = limit;
     load_idt(&pseudo);
 }
