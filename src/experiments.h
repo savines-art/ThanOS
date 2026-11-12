@@ -5,7 +5,7 @@
 #ifndef THANOS_EXPERIMENTS_H
 #define THANOS_EXPERIMENTS_H
 
-void shit(int arg);
+void exception(int arg);
 void syscall();
 void timer_ex();
 

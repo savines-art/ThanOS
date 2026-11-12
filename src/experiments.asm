@@ -2,8 +2,8 @@
 
 [EXTERN set_interrupt]
 
-[GLOBAL shit]
-shit:
+[GLOBAL exception]
+exception:
     mov eax, 0
     mov ecx, 1
     mov edx, 2
@@ -23,7 +23,7 @@ syscall:
     mov ebp, 4
     mov esi, 5
     mov edi, 6
-    int 17
+    int 0x73
     ret
 
 [GLOBAL timer_ex]

@@ -46,15 +46,12 @@ memcpy:
 
 [GLOBAL memzero]
 memzero:
-    mov ecx, dword[esp + 4]
-    mov edx, dword[esp + 8]
-    .loop:
-        cmp edx, 0
-        jbe .end
-        mov byte[ecx], 0
-        dec edx
-        inc ecx
-        jmp .loop
-    .end:
+    push edi
+    mov edi, dword[esp + 8]
+    mov ecx, dword[esp + 12]
+    mov eax, 0
+    cld
+    rep stosb
+    pop edi
     ret
 

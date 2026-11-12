@@ -4,7 +4,6 @@
 
 #include "memeutils.h"
 #include "alloc_undead.h"
-
 #include "kernel_panic.h"
 
 undead_arena arena = {.start = (char*) 0x100000, .current = (char*) 0x100000, .end = (char*) 0x400000};
